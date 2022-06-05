@@ -1,0 +1,62 @@
+What is Transaction?
+Single Unit of work where all the operation that are carried as part of it should be commited or roll-backed completely.
+
+There are 2 type of transaction are there
+1. Local Transaction.
+Within the transaction boundary if there is only one-single transaction participating resource is there on which we are issuing directly a commit/rollback then it is called "Local Transaction"
+
+2. Global Transaction.
+Within the transaction boundary if there are more than one transactional participating resource are there, on which we are issuing a commit/rollback across all the resources of the boundary then it is called "Global Transaction"
+
+
+What is a tranascation propagation level?
+
+Transaction propagation level is the way through which we can extends the transaction boundary or we can control/demorcate the transaction boundary within our application.
+The Transaction propagation level are generally support by 2 phase commit drivers only and need XA transactionality in general. Spring Framework support 7 transaction propagation levels.
+
+1 REQUIRED
+2 REQUIREDNEW
+3 SUPPORTs
+4 NONSUPPORTED
+5 MANDATORY
+6 NEVER
+7 NESTED
+
+#1 REQUIRED = always requires an transaction to perform the operation. If there is no active transaction exists begin a new transaction and perform the operation, if there exists an active transaction then Join into it without begining an new transaction.
+
+#2 REQUIREDNEW = always require a new transaction if there exist an active transaction suspend it and begin a new transaction to perform the operation
+
+#3 SUPPORT = If we dont have an existing transaction, dont begin new transaction rather execute without transaction. If there exists an active transcation will join into it.
+
+#4 NOT SUPPORT = If we have an active transaction, i will suspend the one and will perform operation without any transaction. If there is no active transaction will continue to execute
+
+#5 MANDATORY = Always requires an active transaction, If there is no active transaction will throw an exception.
+
+#6 NEVER = will execute always without transaction, if you call me within an active transaction will result in exception
+
+#7 NESTED = Create an save point on the existing transaction and continue to execute, where there is an exception the transaction will be rollback till the last save point.
+
+----------------------------------------
+
+Isolation Levels = is a mechanism through which we can achieve highest-level of data consistency within an application.
+
+While performing the operations on the underlying database, we will run into three type of problems
+
+1. Dirty Read = If we read the uncommitted data of an another active transaction, we run into dirty read problem, (given the other transaction has been rollback)
+
+2. NonRepeatable Read = Within an active transaction if read a record R1 at a time t1 and if we try to read the same record within the same transaction at later point of time t5, the record we have fetched earlier might have been modified or deleted, which is non-repeatable read.
+
+3. Phantom Read = Within an active transaction at time T1 if we read a bunch of record at later point of time within the same transaction if we re-execute the same query to read the data the same set of records we read earlier may not appear.
+we might get more number of records, or less or data might be modified as well.
+
+ISOLATION LEVELS             DIRTY_READ                NON-REPEATABLE READ          PHANTOM READ PROBLEM
+--------------------------------------------------------------------------------------------------------- 
+READ_UNCOMMITTED               YES                          YES                           YES 
+READ COMMITED                  NO                           YES                           YES 
+REPETABLE_READ                 NO                           NO                            YES 
+SERIALIZABLE                   NO                           NO                            NO
+
+by default for all unchecked exception thrown by service method, the transcation advice will rollback on transaction manager but if the exception thrown by the service method is checked exception the transaction will not be rollback by default and will be kept open.
+If we want to rollback for an checked exception as well then we need to declare in @Transactional annotation as rollbackForClass = "FullQualifiedNameOfException Class"
+
+@Transactional(readOnly=true, ISOLATIONLevel.SERIALIZABLE, propagationLevel=PropagationLevel.REQUIRED,RollbackForClass="FullQualifiedNameOfException Class")
