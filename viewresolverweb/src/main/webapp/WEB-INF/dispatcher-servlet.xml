@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+       <bean id="simpleurlhandlermapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+       	<property name="mappings">
+       		<props>
+       			<prop key="/aboutus.htm">parameterizableviewcontroller</prop>
+       		</props>
+       	</property>
+       </bean>
+       
+       <bean id="parameterizableviewcontroller" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+       	<property name="viewName" value="aboutus"/>
+       </bean>
+       
+       <!-- <bean id="internalresourceviewresolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+       	<property name="prefix" value="/WEB-INF/jsp/"/>
+       	<property name="suffix" value=".jsp"/>
+       </bean> -->
+       
+       <!-- <bean id="dashboard" class="org.springframework.web.servlet.view.JstlView">
+       	<property name="url" value="/WEB-INF/jsp/aboutus.jsp"></property>
+       </bean> -->
+       <!-- <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/> -->
+       
+       <!-- <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+       	<property name="location" value="/WEB-INF/views.xml"></property>
+       </bean> -->
+       <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+       	<property name="prefix" value="/WEB-INF/jsp/"/>
+       	<property name="suffix" value=".jsp"/>
+       </bean>
+       
+       	
+</beans>
