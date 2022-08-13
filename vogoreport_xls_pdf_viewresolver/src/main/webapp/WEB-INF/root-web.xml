@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+       <bean id="simpleurhandlermapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+       	<property name="mappings">
+       		<props>
+       			<prop key="/vogo-home.htm">homecontroller</prop>
+       			<prop key="/bike-rental.htm">bikerental</prop>
+       			<prop key="/searchvogo.htm">searchVogoBike</prop>
+       		</props>
+       	</property>
+       </bean>
+       
+       <bean id="homecontroller" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+       	<property name="viewName" value="vogo-home"></property>
+       </bean>
+       <bean id="bikerental" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+       	<property name="viewName" value="bike-rental"></property>
+       </bean>
+       <bean id="searchVogoBike" class="com.learn.mvc.vxpv.controller.BikeRentalController">
+       	<property name="bikeRentalService" ref="bikeRentalService"/>
+       </bean>
+       
+       
+       
+       <bean id="bike-rental-xls" class="com.learn.mvc.vxpv.view.BikeRentalExcelView"></bean>
+       <bean id="bike-rental-pdf" class="com.learn.mvc.vxpv.view.BikeRentalPdfView"></bean>
+       
+       <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+       
+       <bean id="internalresourceviewresolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+       	<property name="prefix" value="/WEB-INF/jsp/"/>
+       	<property name="suffix" value=".jsp"/>
+       </bean>
+</beans>
